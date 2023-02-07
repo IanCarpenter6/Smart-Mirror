@@ -1,4 +1,4 @@
-# p2.ian.carpenter
+# Smart Mirror Prototype
 
 My main objective was to create a smart mirror that gives users the answers they need immediately from their household with all information they could need.
 
