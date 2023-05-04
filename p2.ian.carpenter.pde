@@ -8,49 +8,51 @@ PImage healthIcon;
 PImage newsIcon;
 PImage emailIcon;
 
-boolean hoverClk = false;
-float btnxClk, btnyClk;
-float xOffClk, yOffClk = 0.0;
-boolean hoverH = false;
-float btnxH, btnyH;
-float xOffH, yOffH = 0.0;
-boolean hoverC = false;
+boolean hoverClk = false; // a flag to indicate whether the mouse is hovering over the clock icon
+float btnxClk, btnyClk; // variables to store the position of the clock icon
+float xOffClk, yOffClk = 0.0; // variables to store the offset of the clock icon from the mouse position when clicked
+boolean hoverH = false; // a flag to indicate whether the mouse is hovering over the health app icon
+float btnxH, btnyH; // variables to store the position of the helath icon
+float xOffH, yOffH = 0.0; // variables to store the offset of the health icon from the mouse position when clicked
+boolean hoverC = false; // for calender icon
 float btnxC, btnyC;
 float xOffC, yOffC = 0.0;
-boolean hoverE = false;
+boolean hoverE = false; // for email icon
 float btnxE, btnyE;
 float xOffE, yOffE = 0.0;
-boolean hoverW = false;
+boolean hoverW = false; // for weather icon
 float btnxW, btnyW;
 float xOffW, yOffW = 0.0;
-boolean hoverN = false;
+boolean hoverN = false; // for news icon 
 float btnxN, btnyN;
 float xOffN, yOffN = 0.0;
 
-boolean openEmail = false;
-boolean pressEmail = true;
-boolean openCalender = false;
-boolean pressCalender = true;
-boolean openNews = false;
+boolean openEmail = false; // indicating email icon has yet to opened
+boolean pressEmail = true; // indicating email icon has been clicked on
+boolean openCalender = false; // for calendar icon
+boolean pressCalender = true; 
+boolean openNews = false; // for news icon
 boolean pressNews = true;
-boolean openWeather = false;
+boolean openWeather = false; // for weather icon
 boolean pressWeather = true;
-boolean openHealth = false;
+boolean openHealth = false; // for health icon
 boolean pressHealth = true;
 
-int month, day, min, hr;
+int month, day, min, hr; // variables storing current date and time
 
 void setup()
 {
-  size(1000, 850);
-  video = new Capture(this, 1000, 850, 30);
-  video.start();
+  size(1000, 850); // size for canvas
+  video = new Capture(this, 1000, 850, 30); // initialize a new video capture with the given dimensions and frame rate
+  video.start(); // start the video capture
   
+  // load the images for the app icons
   emailIcon = loadImage("emailapp.png");
   newsIcon = loadImage("newsapp.png");
   weatherIcon = loadImage("weatherapp.png");
   healthIcon = loadImage("healthapp.png");
   
+  // set the x and y coordinates for each app button
   btnxClk = 100;
   btnyClk = 770;
   btnxC = 100;
@@ -63,8 +65,9 @@ void setup()
   btnyW = 100;
   btnxN = 900;
   btnyN = 100;
-  rectMode(RADIUS);
+  rectMode(RADIUS); // set the rectangle drawing mode to RADIUS
   
+  // resize icons to desired dimensions
   healthIcon.resize(75,75);
   emailIcon.resize(100,80);
   newsIcon.resize(75,75);
@@ -72,14 +75,18 @@ void setup()
 }
 
 void draw(){
+  // Check if video is available
   if(video.available())
+  // read the video
   {video.read();}
-  background(0);
-  image(video, 0, 0);
-  tint(250, 250);
+  background(0); // black background
+  image(video, 0, 0); // Draw the video image at the top left corner of the canvas
+  tint(250, 250); // Set tint color to white with low opacity
   
+  // Check if mouse is over the clock button
   if(mouseX>btnxClk-75 && mouseX<btnxClk+75 && mouseY>btnyClk-75 && mouseY<btnyClk+75)
   {
+    // Set the hover state of clock button to true while the other states will be equal to false
     hoverClk = true;
     hoverH = false;
     hoverC = false;
@@ -89,6 +96,7 @@ void draw(){
   } 
   else if(mouseX>btnxH-75 && mouseX<btnxH+75 && mouseY>btnyH-75 && mouseY<btnyH+75)
   {
+    // Set the hover state of health button to true while the other states will be equal to false
     hoverClk = false;
     hoverH = true;
     hoverC = false;
@@ -98,6 +106,7 @@ void draw(){
   } 
   else if(mouseX>btnxC-75 && mouseX<btnxC+75 && mouseY>btnyC-75 && mouseY<btnyC+75)
   {
+    // Set the hover state of calendar button to true while the other states will be equal to false
     hoverClk = false;
     hoverH = false;
     hoverC = true;
@@ -107,6 +116,7 @@ void draw(){
   } 
   else if(mouseX>btnxN-75 && mouseX<btnxN+75 && mouseY>btnyN-75 && mouseY<btnyN+75) 
   {
+    // Set the hover state of news button to true while the other states will be equal to false
     hoverClk = false;
     hoverH = false;
     hoverC = false;
@@ -116,6 +126,7 @@ void draw(){
   } 
   else if(mouseX>btnxE-75 && mouseX<btnxE+75 && mouseY>btnyE-75 && mouseY<btnyE+75) 
   {
+    // Set the hover state of email button to true while the other states will be equal to false
     hoverClk = false;
     hoverH = false;
     hoverC = false;
@@ -125,6 +136,7 @@ void draw(){
   } 
   else if(mouseX>btnxW-75 && mouseX<btnxW+75 && mouseY > btnyW-25 && mouseY<btnyW+25)
   {
+    // Set the hover state of weather button to true while the other states will be equal to false
     hoverClk = false;
     hoverH = false;
     hoverC = false;
@@ -133,11 +145,12 @@ void draw(){
     hoverW = true; 
   } 
   else 
-  {
+  { // Set fill color to red and stroke color to black
     fill(250,0,0);
     stroke(0);
   }
   
+  // Set fill color and draw a rectangle at a position with a width and height of 75 pixels for each button
   fill(0, 456, 321);
   rect(btnxN, btnyN, 75, 75);
   fill(453, 56, 234);
@@ -151,9 +164,10 @@ void draw(){
   fill(190, 400, 0);
   rect(btnxH, btnyH, 75, 75);
   
-  month = month();
-  day = day();
+  month = month(); // Set the value of the variable "month" to the current month
+  day = day(); // Set the value of the variable "day" to the current day
   
+  // Drawing an image of an icon at its position
   image(emailIcon, btnxE-43, btnyE-35);
   image(weatherIcon, btnxW-75, btnyW-75);
   image(newsIcon, btnxN-33, btnyN-31);
@@ -162,6 +176,8 @@ void draw(){
   fill(250);
   textSize(50);
 
+  // Check the current month and display the abbreviated month name at position (btnxC-30, btnyC-5)
+  // Display the day number at position (btnxC-10, btnyC+33)
   if(month == 1)
   {text("Jan", btnxC-30, btnyC-5);} 
   else if(month == 2)
@@ -187,6 +203,8 @@ void draw(){
   else if(month == 12)
   {text("Dec", btnxC-30, btnyC-5);}
   text(day, btnxC-10, btnyC+33);
+  
+  // if open____ becomes true, run its assigned program
   if(openCalender)
   {calenderProg();} 
   else if(openWeather) 
@@ -197,8 +215,11 @@ void draw(){
   {healthProg();} 
   else if(openNews) 
   {newsProg();} 
-  hr = hour();
-  min = minute();
+  
+  hr = hour(); // Set the value of the variable "hour" to the current month
+  min = minute(); // Set the value of the variable "minute" to the current month
+  
+  // clock text position and color using hr and min
   fill(150, 324 , 6);
   textSize(30);
   text(hr, btnxClk-45, btnyClk+12);
@@ -208,10 +229,10 @@ void draw(){
 
 void mouseClicked()
 {
-   if(hoverN && pressNews == true)
+   if(hoverN && pressNews == true) // checks if the mouse is hovering over the news button and it has been clicked
    {
-     openNews = true;
-     pressNews = false;
+     openNews = true; // sets the program to open
+     pressNews = false; // sets the button to not be pressed
    } 
    else if(hoverC && pressCalender == true) 
    {
@@ -233,7 +254,7 @@ void mouseClicked()
      openWeather = true;
      pressWeather = false;
    } 
-   else 
+   else // if no buttons were clicked, then all press_____ remain true
    {
      openNews = false;
      pressNews = true;
@@ -250,13 +271,14 @@ void mouseClicked()
 
 void calenderProg()
 {
-  strokeWeight(17);
-  stroke(150, 400, 12);
-  noFill();
-  tint(250, 75);
-  rect(500, 495, 375, 250); 
-  textSize(50);
+  strokeWeight(17); // Thickness of the border of the rectangle
+  stroke(150, 400, 12); // Color of the border of the rectangle
+  noFill(); // Remove fill from rectangle
+  tint(250, 75); // Color and transparency of the rectangle
+  rect(500, 495, 375, 250); // Draw a rectangle at position (500, 495) with a width of 375 and height of 250
+  textSize(50); 
   
+  // Check which month it is and display the name of the month
   if(month == 1)
   {text("Janurary", 380, 290);} 
   else if(month == 2)
@@ -281,7 +303,9 @@ void calenderProg()
   {text("November", 380, 290);} 
   else if(month == 12)
   {text("December", 380, 290);}
+  
   textSize(36);
+  // Display the names of the days of the week
   text("Sun", 140, 325);
   text("Mon", 230, 325);
   text("Tues", 350, 325);
@@ -289,8 +313,11 @@ void calenderProg()
   text("Thurs", 590, 325);
   text("Fri", 710, 325);
   text("Sat", 810, 325);
+  
   noStroke();
   fill(255);
+  
+  // Draw vertical  and horizontal lines to separate the days
   rect(215, 540, 6, 200);
   rect(325, 540, 6, 200);
   rect(445, 540, 6, 200);
@@ -304,6 +331,8 @@ void calenderProg()
   rect(500, 600, 370, 6);
   rect(500, 660, 370, 6);
   fill(250);
+  
+  // Display the dates for the first two rows
   text("1              2              3             4          5", 380, 380);
   text("6           7             8              9            10           11         12", 170, 450);
   text("13         14          15            16           17           18        19", 150, 520);
@@ -344,6 +373,7 @@ void newsProg()
   text("Whether or not its all true... we may have to wait till the next class for a", 290, 690);
   text("solidified answer from Dr. Dang.", 290, 705);
   
+  // Calling images used for project for each assigned news summary
   PImage abc = loadImage("hyena.jpg");
   PImage cbs = loadImage("bird.jpg");
   PImage fox = loadImage("Dang.png");
@@ -376,15 +406,15 @@ void emailProg()
   fill(250);
   textSize(22);
   text("Bob L.          <robert.lowe@gmail.com>", 320, 355);
-  text("Dang  <donotreply@blackboard.com>", 320, 475);
+  text("Dr. Dang  <donotreply@blackboard.com>", 320, 475);
   text("Dawn E.(Doctor) <dawne.doc@aol.com>", 320, 595);
   text("Elon              <elonmusk@yahoo.com>", 320, 715);
  
   textSize(17);
-  text("Aye just checkin' on how your NFT grind going...", 320, 390);
+  text("Hey just checkin' on how your NFT grind is going...", 320, 390);
   text("Project 3: Stove Design...", 320, 510);
-  text("How're your ligaments doing?", 320, 630);
-  text("So Metaverse for 70 billion?...", 320, 750);
+  text("How's your ligament medication going?", 320, 630);
+  text("Metaverse for 7 billion?...", 320, 750);
   
   tint(250,75);
   fill(250);
